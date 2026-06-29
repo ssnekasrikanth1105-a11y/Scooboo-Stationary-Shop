@@ -1,321 +1,954 @@
-import React, { useContext } from "react";
+import React,{useContext} from "react";
 import styled from "styled-components";
-import { CartContext } from "../context/CartContext";
+import {motion} from "framer-motion";
+import {Link} from "react-router-dom";
 
-function Cart() {
+import {CartContext} from "../context/CartContext";
 
-  const { cartItems, removeFromCart } =
-    useContext(CartContext);
 
-  const totalPrice = cartItems.reduce(
-    (total, item) =>
-      total +
-      parseInt(item.price.replace("₹", "")) *
-      item.quantity,
-    0
-  );
 
-  return (
-    <Container>
 
-      <Title>🛒 My Shopping Cart</Title>
 
-      {cartItems.length === 0 ? (
+function Cart(){
 
-        <EmptyCart>
-          <EmptyIcon>🛍️</EmptyIcon>
-          <h2>Your Cart Is Empty</h2>
-          <p>Add some amazing stationery products.</p>
-        </EmptyCart>
 
-      ) : (
 
-        <Wrapper>
+const {
 
-          <CartSection>
+cart=[],
 
-            {cartItems.map((item) => (
+removeCart,
 
-              <CartCard key={item.id}>
+increaseQty,
 
-                <ProductImage
-                  src={item.image}
-                  alt={item.name}
-                />
+decreaseQty
 
-                <ProductInfo>
 
-                  <ProductName>
-                    {item.name}
-                  </ProductName>
+}=useContext(CartContext);
 
-                  <Price>
-                    {item.price}
-                  </Price>
 
-                  <Quantity>
-                    Quantity : {item.quantity}
-                  </Quantity>
 
-                </ProductInfo>
 
-                <RemoveButton
-                  onClick={() =>
-                    removeFromCart(item.id)
-                  }
-                >
-                  Remove
-                </RemoveButton>
 
-              </CartCard>
 
-            ))}
+const total = cart.reduce(
 
-          </CartSection>
+(sum,item)=>
 
-          <SummarySection>
+sum + Number(item.price) * Number(item.qty || 1)
 
-            <SummaryTitle>
-              Order Summary
-            </SummaryTitle>
+,0
 
-            <Row>
-              <span>Products</span>
-              <span>{cartItems.length}</span>
-            </Row>
+);
 
-            <Row>
-              <span>Shipping</span>
-              <span>₹50</span>
-            </Row>
 
-            <Divider />
 
-            <TotalRow>
-              <span>Total</span>
-              <span>
-                ₹{totalPrice + 50}
-              </span>
-            </TotalRow>
 
-            <CheckoutButton>
-              Proceed To Checkout
-            </CheckoutButton>
 
-          </SummarySection>
 
-        </Wrapper>
+return(
 
-      )}
 
-    </Container>
-  );
+
+<Page>
+
+
+
+<Title>
+
+Shopping Cart 🛒
+
+</Title>
+
+
+
+
+
+
+
+
+
+{
+cart.length===0 ?
+
+
+
+<Empty>
+
+
+
+<h1>
+
+🛒
+
+</h1>
+
+
+
+<h2>
+
+Your cart is empty
+
+</h2>
+
+
+
+<Link to="/shop">
+
+
+<button>
+
+Continue Shopping
+
+</button>
+
+
+</Link>
+
+
+
+</Empty>
+
+
+
+
+
+:
+
+
+
+<Layout>
+
+
+
+
+
+
+
+<ProductArea>
+
+
+
+
+
+
+{
+
+cart.map(item=>(
+
+
+
+
+<Card
+
+
+key={item.id}
+
+
+as={motion.div}
+
+
+
+initial={{
+opacity:0,
+y:30
+}}
+
+
+
+animate={{
+opacity:1,
+y:0
+}}
+
+
+
+
+whileHover={{
+
+scale:.98
+
+}}
+
+
+
+>
+
+
+
+
+
+
+<img
+
+src={item.img}
+
+alt={item.name}
+
+/>
+
+
+
+
+
+
+<div>
+
+
+<h2>
+
+{item.name}
+
+</h2>
+
+
+
+<h3>
+
+₹{item.price}
+
+</h3>
+
+
+
+
+
+
+
+
+<Qty>
+
+
+
+<button
+
+onClick={()=>
+decreaseQty(item.id)
 }
+
+>
+
+-
+
+</button>
+
+
+
+
+
+<span>
+
+{item.qty || 1}
+
+</span>
+
+
+
+
+
+<button
+
+onClick={()=>
+increaseQty(item.id)
+}
+
+>
+
++
+
+</button>
+
+
+
+
+</Qty>
+
+
+
+
+
+
+<button
+
+className="remove"
+
+onClick={()=>
+removeCart(item.id)
+}
+
+
+>
+
+Remove
+
+</button>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</Card>
+
+
+
+
+))
+
+
+}
+
+
+
+
+
+
+
+</ProductArea>
+
+
+
+
+
+
+
+
+
+<Summary>
+
+
+
+<h1>
+
+Order Summary ✨
+
+</h1>
+
+
+
+
+
+
+
+<Row>
+
+<span>
+
+Products
+
+</span>
+
+
+<b>
+
+{cart.length}
+
+</b>
+
+
+</Row>
+
+
+
+
+
+
+
+
+
+<Row>
+
+
+<span>
+
+Total
+
+</span>
+
+
+
+<b>
+
+₹{total}
+
+</b>
+
+
+</Row>
+
+
+
+
+
+
+
+<Link to="/checkout">
+
+
+<Checkout>
+
+Place Order 🎉
+
+</Checkout>
+
+
+</Link>
+
+
+
+
+
+
+</Summary>
+
+
+
+
+
+
+
+</Layout>
+
+
+
+}
+
+
+
+
+
+
+</Page>
+
+
+
+
+)
+
+
+}
+
+
 
 export default Cart;
 
-/* ================= STYLES ================= */
 
-const Container = styled.div`
-  min-height: 100vh;
-  padding: 50px;
-  background: linear-gradient(
-    135deg,
-    #eef2ff,
-    #f8fafc
-  );
+
+
+
+
+
+
+
+
+
+// ================= STYLE =================
+
+
+
+
+const Page=styled.div`
+
+
+min-height:100vh;
+
+
+padding:60px;
+
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff7ed,
+#fce7f3,
+#fef3c7
+);
+
+
+
 `;
 
-const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 50px;
-  font-size: 50px;
 
-  background: linear-gradient(
-    90deg,
-    #8b5cf6,
-    #06b6d4,
-    #ec4899
-  );
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+
+
+
+
+const Title=styled.h1`
+
+
+text-align:center;
+
+
+color:#92400e;
+
+
+margin-bottom:50px;
+
+
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  gap: 30px;
 
-  @media(max-width:900px){
-    flex-direction: column;
-  }
+
+
+
+
+
+
+
+const Layout=styled.div`
+
+
+display:grid;
+
+
+grid-template-columns:2fr 1fr;
+
+
+gap:35px;
+
+
+
+@media(max-width:900px){
+
+grid-template-columns:1fr;
+
+}
+
+
+
 `;
 
-const CartSection = styled.div`
-  flex: 2;
+
+
+
+
+
+
+
+
+const ProductArea=styled.div`
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:25px;
+
+
+
 `;
 
-const SummarySection = styled.div`
-  flex: 1;
 
-  background: linear-gradient(
-    135deg,
-    #111827,
-    #1f2937
-  );
 
-  color: white;
 
-  padding: 30px;
 
-  border-radius: 25px;
 
-  height: fit-content;
 
-  box-shadow:
-    0 15px 40px rgba(0,0,0,.2);
+
+
+const Card=styled.div`
+
+
+padding:25px;
+
+
+display:flex;
+
+
+gap:25px;
+
+
+align-items:center;
+
+
+
+border-radius:35px;
+
+
+
+
+background:
+
+rgba(255,255,255,.65);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+box-shadow:
+
+0 20px 50px #0002;
+
+
+
+
+
+img{
+
+
+width:150px;
+
+
+height:150px;
+
+
+object-fit:cover;
+
+
+border-radius:25px;
+
+
+
+}
+
+
+
+h2{
+
+
+color:#57534e;
+
+
+}
+
+
+
+h3{
+
+
+color:#d97706;
+
+
+}
+
+
+
+.remove{
+
+
+margin-top:15px;
+
+
+border:none;
+
+
+background:#fee2e2;
+
+
+padding:10px 20px;
+
+
+border-radius:20px;
+
+
+color:#dc2626;
+
+
+cursor:pointer;
+
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+flex-direction:column;
+
+
+}
+
+
+
 `;
 
-const CartCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 25px;
 
-  background: white;
 
-  padding: 20px;
 
-  border-radius: 25px;
 
-  margin-bottom: 25px;
 
-  border: 2px solid #e5e7eb;
 
-  transition: .4s;
 
-  &:hover{
-    transform: translateY(-5px);
 
-    box-shadow:
-      0 15px 35px rgba(0,0,0,.1);
-  }
+const Qty=styled.div`
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:15px;
+
+
+margin-top:15px;
+
+
+
+button{
+
+
+width:35px;
+
+
+height:35px;
+
+
+border:none;
+
+
+border-radius:50%;
+
+
+
+background:
+
+linear-gradient(
+90deg,
+#d97706,
+#ec4899
+);
+
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+font-size:18px;
+
+
+
+}
+
+
+
+span{
+
+
+font-size:20px;
+
+
+}
+
+
 `;
 
-const ProductImage = styled.img`
-  width: 150px;
-  height: 150px;
 
-  object-fit: cover;
 
-  border-radius: 20px;
 
-  border: 4px solid #f3f4f6;
+
+
+
+
+
+const Summary=styled.div`
+
+
+padding:35px;
+
+
+height:max-content;
+
+
+border-radius:40px;
+
+
+
+
+background:
+
+rgba(255,255,255,.7);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+box-shadow:0 20px 50px #0002;
+
+
+
+
+h1{
+
+color:#92400e;
+
+}
+
+
 `;
 
-const ProductInfo = styled.div`
-  flex: 1;
+
+
+
+
+
+
+
+
+const Row=styled.div`
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+padding:15px 0;
+
+
+
+color:#57534e;
+
+
+
+b{
+
+color:#ec4899;
+
+}
+
+
+
 `;
 
-const ProductName = styled.h2`
-  color: #111827;
-  margin-bottom: 10px;
+
+
+
+
+
+
+
+
+const Checkout=styled.button`
+
+
+width:100%;
+
+
+margin-top:25px;
+
+
+padding:15px;
+
+
+
+border:none;
+
+
+border-radius:30px;
+
+
+
+background:
+
+linear-gradient(
+90deg,
+#d97706,
+#ec4899
+);
+
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+
 `;
 
-const Price = styled.p`
-  color: #2563eb;
-  font-size: 22px;
-  font-weight: bold;
-`;
 
-const Quantity = styled.p`
-  color: #6b7280;
-  margin-top: 10px;
-`;
 
-const RemoveButton = styled.button`
-  padding: 12px 20px;
 
-  border: none;
 
-  border-radius: 12px;
 
-  background: #ef4444;
 
-  color: white;
 
-  cursor: pointer;
 
-  font-weight: bold;
+const Empty=styled.div`
 
-  transition: .3s;
 
-  &:hover{
-    background: #dc2626;
-    transform: scale(1.05);
-  }
-`;
+width:450px;
 
-const SummaryTitle = styled.h2`
-  margin-bottom: 25px;
-`;
 
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 18px;
-`;
+margin:100px auto;
 
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid #374151;
-  margin: 20px 0;
-`;
 
-const TotalRow = styled.div`
-  display: flex;
-  justify-content: space-between;
+padding:50px;
 
-  font-size: 24px;
-  font-weight: bold;
 
-  margin-bottom: 25px;
-`;
 
-const CheckoutButton = styled.button`
-  width: 100%;
+text-align:center;
 
-  padding: 16px;
 
-  border: none;
+border-radius:40px;
 
-  border-radius: 15px;
 
-  background: linear-gradient(
-    135deg,
-    #f59e0b,
-    #ef4444
-  );
 
-  color: white;
+background:
 
-  font-size: 18px;
-  font-weight: bold;
+rgba(255,255,255,.65);
 
-  cursor: pointer;
 
-  transition: .4s;
 
-  &:hover{
-    transform: translateY(-3px);
-  }
-`;
 
-const EmptyCart = styled.div`
-  text-align: center;
-  margin-top: 120px;
-`;
+h1{
 
-const EmptyIcon = styled.div`
-  font-size: 80px;
-  margin-bottom: 20px;
+font-size:80px;
+
+}
+
+
+
+button{
+
+
+padding:15px 30px;
+
+
+border:none;
+
+
+border-radius:30px;
+
+
+background:#d97706;
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+}
+
+
+
 `;

@@ -1,174 +1,859 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
+import React from "react";
+import styled,{keyframes} from "styled-components";
+import {motion} from "framer-motion";
+import {
+FaMapMarkerAlt,
+FaPhone,
+FaEnvelope,
+FaInstagram
+} from "react-icons/fa";
 
-const Contact = () => {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
-  const handleSubmit = async () => {
+function Contact(){
 
-    if (!name || !email || !message) {
-      alert("Please Fill All Fields");
-      return;
-    }
 
-    try {
 
-      const res = await axios.post(
+return(
 
-        "http://localhost:3000/api/contact/send",
 
-        {
-          name,
-          email,
-          message
-        }
+<Page>
 
-      );
 
-      alert(res.data.msg);
+<Glow1/>
+<Glow2/>
 
-      setName("");
-      setEmail("");
-      setMessage("");
 
-    } catch (error) {
 
-      console.log(error);
 
-      if (error.response) {
+<Header
 
-        alert(error.response.data.msg);
+as={motion.div}
 
-      } else {
+initial={{
+opacity:0,
+y:-40
+}}
 
-        alert("Server Error");
-      }
-    }
-  };
+animate={{
+opacity:1,
+y:0
+}}
 
-  return (
-    <Container>
+>
 
-      <Card>
 
-        <Title>📞 Contact Us</Title>
+<h1>
+Contact Us ✨
+</h1>
 
-        <Input
-          type="text"
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
 
-        <Input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+<p>
 
-        <TextArea
-          placeholder="Enter your message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+We would love to hear from you.
+Let's create something beautiful.
 
-        <Button onClick={handleSubmit}>
-          Send Message
-        </Button>
+</p>
 
-      </Card>
 
-    </Container>
-  );
-};
+</Header>
+
+
+
+
+
+
+
+<ContactBox>
+
+
+
+<FormCard
+
+
+as={motion.div}
+
+whileHover={{
+y:-10
+}}
+
+>
+
+
+
+<h2>
+Send Message 💌
+</h2>
+
+
+
+<input
+
+placeholder="Your Name"
+
+/>
+
+
+<input
+
+placeholder="Email"
+
+/>
+
+
+
+<input
+
+placeholder="Subject"
+
+/>
+
+
+
+
+<textarea
+
+placeholder="Your Message"
+
+/>
+
+
+
+<button>
+
+Send Message ✨
+
+</button>
+
+
+
+</FormCard>
+
+
+
+
+
+
+
+
+<InfoCard
+
+
+as={motion.div}
+
+whileHover={{
+y:-10
+}}
+
+>
+
+
+
+<h2>
+Get In Touch
+</h2>
+
+
+
+<Item>
+
+<FaMapMarkerAlt/>
+
+<p>
+India
+</p>
+
+</Item>
+
+
+
+<Item>
+
+<FaPhone/>
+
+<p>
++91 9876543210
+</p>
+
+</Item>
+
+
+
+
+<Item>
+
+<FaEnvelope/>
+
+<p>
+hello@scooboo.com
+</p>
+
+</Item>
+
+
+
+
+<Item>
+
+<FaInstagram/>
+
+<p>
+@scooboo
+</p>
+
+</Item>
+
+
+
+
+</InfoCard>
+
+
+
+
+</ContactBox>
+
+
+
+
+
+
+
+
+
+<Quote>
+
+
+
+<h1>
+
+"Your ideas deserve a beautiful place to begin."
+
+</h1>
+
+
+
+<p>
+
+Write • Create • Inspire ✨
+
+</p>
+
+
+</Quote>
+
+
+
+
+
+</Page>
+
+
+
+)
+
+
+}
+
 
 export default Contact;
 
-/* ================= STYLES ================= */
 
-const Container = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg,#0f172a,#1e293b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
+
+
+
+
+
+
+
+// ================= ANIMATION =================
+
+
+
+const move=keyframes`
+
+0%{
+background-position:0% 50%;
+}
+
+
+50%{
+background-position:100% 50%;
+}
+
+
+100%{
+background-position:0% 50%;
+}
+
+
 `;
 
-const Card = styled.div`
-  width: 450px;
-  background: #111827;
-  padding: 40px;
-  border-radius: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 
-  @media(max-width: 500px){
-    width: 100%;
-  }
+
+
+const float=keyframes`
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-30px);
+
+}
+
 `;
 
-const Title = styled.h1`
-  color: white;
-  margin-bottom: 30px;
-  text-align: center;
+
+
+
+
+
+
+
+
+// ================= STYLE =================
+
+
+
+
+
+const Page=styled.div`
+
+
+min-height:100vh;
+
+
+padding:60px;
+
+
+
+position:relative;
+
+
+overflow:hidden;
+
+
+
+background:
+
+
+linear-gradient(
+135deg,
+#fff1f8,
+#ede9fe,
+#fffbeb
+);
+
+
+
+background-size:300% 300%;
+
+
+
+animation:${move} 15s infinite;
+
+
+
 `;
 
-const Input = styled.input`
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: #1f2937;
-  color: white;
-  box-sizing: border-box;
 
-  &::placeholder{
-    color: #9ca3af;
-  }
+
+
+
+
+
+
+
+
+const Glow1=styled.div`
+
+
+position:absolute;
+
+
+width:400px;
+
+height:400px;
+
+
+background:#f9a8d4;
+
+
+border-radius:50%;
+
+
+
+filter:blur(130px);
+
+
+top:-150px;
+
+
+left:-120px;
+
+
+
+animation:${float} 7s infinite;
+
+
 `;
 
-const TextArea = styled.textarea`
-  width: 100%;
-  height: 140px;
-  padding: 15px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  resize: none;
-  background: #1f2937;
-  color: white;
-  box-sizing: border-box;
 
-  &::placeholder{
-    color: #9ca3af;
-  }
+
+
+
+
+
+
+
+const Glow2=styled.div`
+
+
+position:absolute;
+
+
+width:350px;
+
+height:350px;
+
+
+background:#c4b5fd;
+
+
+
+border-radius:50%;
+
+
+
+filter:blur(130px);
+
+
+
+bottom:-120px;
+
+
+right:-100px;
+
+
+
+animation:${float} 8s infinite;
+
+
+
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 12px;
-  margin-top: 20px;
-  background: linear-gradient(
-    90deg,
-    #06b6d4,
-    #8b5cf6
-  );
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: .3s;
 
-  &:hover{
-    transform: translateY(-3px);
-  }
+
+
+
+
+
+
+
+const Header=styled.div`
+
+
+text-align:center;
+
+
+position:relative;
+
+
+z-index:2;
+
+
+
+h1{
+
+
+font-size:60px;
+
+
+font-weight:500;
+
+
+color:#7c3aed;
+
+
+}
+
+
+
+p{
+
+
+font-size:20px;
+
+
+color:#64748b;
+
+
+}
+
+
+
+@media(max-width:700px){
+
+
+h1{
+
+font-size:38px;
+
+}
+
+
+
+}
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const ContactBox=styled.div`
+
+
+position:relative;
+
+
+z-index:2;
+
+
+
+margin-top:60px;
+
+
+
+display:grid;
+
+
+
+grid-template-columns:1fr 1fr;
+
+
+
+gap:35px;
+
+
+
+@media(max-width:800px){
+
+grid-template-columns:1fr;
+
+}
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const FormCard=styled.div`
+
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+padding:40px;
+
+
+border-radius:40px;
+
+
+
+box-shadow:
+
+0 20px 50px #0002;
+
+
+
+h2{
+
+color:#9333ea;
+
+font-weight:500;
+
+}
+
+
+
+input,textarea{
+
+
+width:100%;
+
+
+margin:12px 0;
+
+
+
+padding:15px;
+
+
+border:none;
+
+
+border-radius:20px;
+
+
+outline:none;
+
+
+
+}
+
+
+
+textarea{
+
+height:120px;
+
+}
+
+
+
+button{
+
+
+margin-top:15px;
+
+
+
+padding:15px 35px;
+
+
+
+border:none;
+
+
+border-radius:30px;
+
+
+
+background:
+
+linear-gradient(
+90deg,
+#a855f7,
+#ec4899
+);
+
+
+
+color:white;
+
+
+
+cursor:pointer;
+
+
+
+}
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const InfoCard=styled.div`
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+padding:40px;
+
+
+
+border-radius:40px;
+
+
+
+box-shadow:
+
+0 20px 50px #0002;
+
+
+
+h2{
+
+color:#9333ea;
+
+font-weight:500;
+
+}
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const Item=styled.div`
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:20px;
+
+
+margin:25px 0;
+
+
+
+svg{
+
+
+font-size:25px;
+
+
+color:#ec4899;
+
+
+}
+
+
+
+p{
+
+color:#64748b;
+
+}
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const Quote=styled.div`
+
+
+position:relative;
+
+
+z-index:2;
+
+
+
+margin-top:70px;
+
+
+
+padding:60px;
+
+
+
+border-radius:45px;
+
+
+
+background:
+
+rgba(255,255,255,.45);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+text-align:center;
+
+
+
+h1{
+
+
+font-size:40px;
+
+
+font-weight:500;
+
+
+
+color:#7c3aed;
+
+
+}
+
+
+
+p{
+
+color:#ec4899;
+
+}
+
+
+
+@media(max-width:700px){
+
+h1{
+
+font-size:25px;
+
+}
+
+}
+
+
+
 `;

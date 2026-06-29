@@ -1,104 +1,666 @@
-import React from "react";
+import React,{useContext} from "react";
 import styled from "styled-components";
+import {motion} from "framer-motion";
+import {Link} from "react-router-dom";
 
-const Wishlist = () => {
-  return (
-    <Container>
+import {
+FaShoppingCart,
+FaTrash
+} from "react-icons/fa";
 
-      <Title> Wishlist</Title>
 
-      <Grid>
+import {WishlistContext} from "../context/WishlistContext";
+import {CartContext} from "../context/CartContext";
 
-        <Card>
 
-          <Image
-            src="https://images.unsplash.com/photo-1517842645767-c639042777db"
-          />
 
-          <ProductName>Luxury Pen</ProductName>
 
-          <Price>₹199</Price>
 
-          <Button>Add To Cart</Button>
+function Wishlist(){
 
-        </Card>
 
-        <Card>
 
-          <Image
-            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
-          />
+const {
 
-          <ProductName>Study Planner</ProductName>
+wishlist=[],
 
-          <Price>₹349</Price>
+removeWishlist
 
-          <Button>Add To Cart</Button>
 
-        </Card>
+}=useContext(WishlistContext);
 
-      </Grid>
 
-    </Container>
-  );
+
+
+
+const {
+
+addToCart
+
+}=useContext(CartContext);
+
+
+
+
+
+
+
+
+const moveToCart=(product)=>{
+
+
+addToCart(product);
+
+
+removeWishlist(product.id);
+
+
+
 };
+
+
+
+
+
+
+
+return(
+
+
+
+<Page>
+
+
+
+
+<Title>
+
+My Wishlist ❤️
+
+</Title>
+
+
+
+
+
+
+
+
+{
+
+wishlist.length===0 ?
+
+
+
+
+
+<Empty>
+
+
+<h1>
+
+❤️
+
+</h1>
+
+
+<h2>
+
+Your wishlist is empty
+
+</h2>
+
+
+
+<Link to="/shop">
+
+
+<button>
+
+Explore Products
+
+</button>
+
+
+</Link>
+
+
+
+</Empty>
+
+
+
+
+
+:
+
+
+
+
+
+<Grid>
+
+
+
+
+
+{
+
+wishlist.map(product=>(
+
+
+
+
+
+<Card
+
+
+key={product.id}
+
+
+as={motion.div}
+
+
+
+initial={{
+
+opacity:0,
+
+y:40
+
+}}
+
+
+
+animate={{
+
+opacity:1,
+
+y:0
+
+}}
+
+
+
+
+whileHover={{
+
+scale:1.04,
+
+y:-10
+
+}}
+
+
+
+>
+
+
+
+
+<img
+
+src={product.img}
+
+alt={product.name}
+
+/>
+
+
+
+
+
+
+
+<h2>
+
+{product.name}
+
+</h2>
+
+
+
+
+
+
+<h3>
+
+₹{product.price}
+
+</h3>
+
+
+
+
+
+
+
+<Buttons>
+
+
+
+
+
+
+<CartBtn
+
+
+onClick={()=>moveToCart(product)}
+
+>
+
+
+<FaShoppingCart/>
+
+
+Add Cart
+
+
+</CartBtn>
+
+
+
+
+
+
+
+<DeleteBtn
+
+
+onClick={()=>removeWishlist(product.id)}
+
+>
+
+
+<FaTrash/>
+
+
+</DeleteBtn>
+
+
+
+
+
+
+
+</Buttons>
+
+
+
+
+
+
+
+
+</Card>
+
+
+
+
+
+))
+
+
+}
+
+
+
+
+
+</Grid>
+
+
+
+
+
+}
+
+
+
+
+
+
+
+</Page>
+
+
+
+)
+
+}
+
+
+
 
 export default Wishlist;
 
+const Page=styled.div`
 
 
-const Container = styled.div`
-  min-height: 100vh;
-  background: #111827;
-  padding: 40px;
-  color: white;
+min-height:100vh;
+
+
+padding:60px;
+
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff7ed,
+#fce7f3,
+#fef3c7
+);
+
+
+
 `;
 
-const Title = styled.h1`
-  font-size: 40px;
-  margin-bottom: 40px;
+
+
+
+
+const Title=styled.h1`
+
+
+text-align:center;
+
+
+color:#9d174d;
+
+
+margin-bottom:50px;
+
+
+
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-  gap: 30px;
+
+
+
+
+
+const Grid=styled.div`
+
+
+display:grid;
+
+
+grid-template-columns:repeat(3,1fr);
+
+
+gap:30px;
+
+
+
+@media(max-width:900px){
+
+grid-template-columns:1fr 1fr;
+
+}
+
+
+
+@media(max-width:600px){
+
+grid-template-columns:1fr;
+
+}
+
+
+
 `;
 
-const Card = styled.div`
-  background: #1f2937;
-  padding: 20px;
-  border-radius: 20px;
-  text-align: center;
-  transition: 0.3s;
 
-  &:hover {
-    transform: translateY(-10px);
-  }
+
+
+
+
+
+const Card=styled.div`
+
+
+padding:25px;
+
+
+border-radius:35px;
+
+
+
+text-align:center;
+
+
+
+background:
+
+rgba(255,255,255,.65);
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+box-shadow:
+
+0 20px 50px #0002;
+
+
+
+
+
+img{
+
+
+width:100%;
+
+
+height:250px;
+
+
+object-fit:cover;
+
+
+border-radius:25px;
+
+
+}
+
+
+
+
+h2{
+
+color:#57534e;
+
+}
+
+
+
+h3{
+
+color:#ec4899;
+
+}
+
+
+
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 250px;
-  border-radius: 15px;
-  object-fit: cover;
+
+
+
+
+
+
+
+
+const Buttons=styled.div`
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+gap:15px;
+
+
+
 `;
 
-const ProductName = styled.h2`
-  margin-top: 20px;
+
+
+
+
+
+
+
+const CartBtn=styled.button`
+
+
+padding:12px 20px;
+
+
+border:none;
+
+
+border-radius:30px;
+
+
+
+background:
+
+linear-gradient(
+90deg,
+#d97706,
+#ec4899
+);
+
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:8px;
+
+
+
 `;
 
-const Price = styled.h3`
-  color: #06b6d4;
+
+
+
+
+
+
+
+const DeleteBtn=styled.button`
+
+
+width:45px;
+
+
+height:45px;
+
+
+
+border:none;
+
+
+border-radius:50%;
+
+
+
+background:#fee2e2;
+
+
+color:#dc2626;
+
+
+
+cursor:pointer;
+
+
+
 `;
 
-const Button = styled.button`
-  margin-top: 20px;
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg,#ec4899,#8b5cf6);
-  color: white;
-  cursor: pointer;
+
+
+
+
+
+
+
+const Empty=styled.div`
+
+
+width:450px;
+
+
+margin:100px auto;
+
+
+padding:50px;
+
+
+
+text-align:center;
+
+
+
+border-radius:40px;
+
+
+
+background:white;
+
+
+
+h1{
+
+font-size:80px;
+
+}
+
+
+
+button{
+
+
+padding:15px 30px;
+
+
+border:none;
+
+
+border-radius:30px;
+
+
+background:#ec4899;
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+
+}
+
+
+
 `;

@@ -1,146 +1,943 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Footer = () => {
-  return (
-    <FooterContainer>
-      <Content>
+import {
+  FaInstagram,
+  FaFacebook,
+  FaTwitter,
+  FaHeart,
+  FaPenNib,
+  FaBookOpen,
+  FaPaperPlane
+} from "react-icons/fa";
 
-        <Box>
-          <Logo>✏️ ScooBoo</Logo>
 
-          <Description>
-            Your premium destination for notebooks,
-            pens, planners, office essentials and
-            creative stationery supplies.
-          </Description>
-        </Box>
 
-        <Box>
-          <Title>Quick Links</Title>
+function Footer(){
 
-          <List>
-            <li><StyledLink to="/">Home</StyledLink></li>
-            <li><StyledLink to="/shop">Shop</StyledLink></li>
-            <li><StyledLink to="/collection">Collections</StyledLink></li>
-            <li><StyledLink to="/deals">Deals</StyledLink></li>
-            <li><StyledLink to="/contact">Contact</StyledLink></li>
-          </List>
-        </Box>
 
-        <Box>
-          <Title>Customer Support</Title>
+return(
 
-          <List>
-            <li>Help Center</li>
-            <li>Shipping Policy</li>
-            <li>Return Policy</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
-          </List>
-        </Box>
 
-        <Box>
-          <Title>Contact Us</Title>
+<FooterContainer>
 
-          <ContactText>Email: support@inkaura.com</ContactText>
-          <ContactText>Phone: +91 98765 43210</ContactText>
-          <ContactText>Calicut, Kerala</ContactText>
-        </Box>
 
-      </Content>
 
-      <Bottom>
-        © {new Date().getFullYear()} InkAura. All Rights Reserved.
-      </Bottom>
-    </FooterContainer>
-  );
-};
+<Floating className="pen">
+<FaPenNib/>
+</Floating>
+
+
+
+<Floating className="book">
+<FaBookOpen/>
+</Floating>
+
+
+
+
+
+
+
+<Newsletter>
+
+
+
+<div>
+
+<h1>
+Stay Creative ✨
+</h1>
+
+
+<p>
+Subscribe for latest stationery updates,
+new arrivals and offers.
+</p>
+
+
+</div>
+
+
+
+
+
+
+<NewsForm>
+
+
+<input
+
+type="email"
+
+placeholder="Enter your email"
+
+/>
+
+
+<button>
+
+<FaPaperPlane/>
+
+Subscribe
+
+</button>
+
+
+</NewsForm>
+
+
+
+
+</Newsletter>
+
+
+
+
+
+
+
+
+
+<FooterGrid>
+
+
+
+
+
+
+<Brand>
+
+
+
+<h2>
+
+SCOOBOO
+
+</h2>
+
+
+
+<p>
+
+Premium stationery store for
+students, artists and creators.
+
+</p>
+
+
+
+
+<div className="social">
+
+
+<FaInstagram/>
+
+<FaFacebook/>
+
+<FaTwitter/>
+
+
+</div>
+
+
+
+</Brand>
+
+
+
+
+
+
+
+
+
+<Column>
+
+
+<h3>
+
+Quick Links
+
+</h3>
+
+
+<a href="/">
+Home
+</a>
+
+
+<a href="/shop">
+Shop
+</a>
+
+
+<a href="/collection">
+Collections
+</a>
+
+
+<a href="/contact">
+Contact
+</a>
+
+
+</Column>
+
+
+
+
+
+
+
+
+
+<Column>
+
+
+<h3>
+
+Categories
+
+</h3>
+
+
+<a>
+Notebooks
+</a>
+
+
+<a>
+Pens
+</a>
+
+
+<a>
+Art Supplies
+</a>
+
+
+<a>
+Study Kits
+</a>
+
+
+</Column>
+
+
+
+
+
+
+
+
+
+<Column>
+
+
+<h3>
+
+Support
+
+</h3>
+
+
+<a>
+Privacy Policy
+</a>
+
+
+<a>
+Terms
+</a>
+
+
+<a>
+Help
+</a>
+
+
+
+</Column>
+
+
+
+
+
+
+</FooterGrid>
+
+
+
+
+
+
+
+
+
+
+<Bottom>
+
+
+<p>
+
+© 2026 NoteNest. All Rights Reserved.
+
+</p>
+
+
+<p>
+
+Made with 
+
+<FaHeart/>
+
+ for creators
+
+</p>
+
+
+
+</Bottom>
+
+
+
+
+
+
+</FooterContainer>
+
+
+
+)
+
+}
+
+
 
 export default Footer;
 
-/* ================= STYLES ================= */
+
+
+
+
+
+
+
+
+// ================= ANIMATIONS =================
+
+
+
+const moveBg = keyframes`
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+`;
+
+
+
+
+
+
+const float = keyframes`
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+
+50%{
+
+transform:translateY(-25px);
+
+}
+
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+
+`;
+
+
+
+
+
+
+
+const shine = keyframes`
+
+0%{
+
+left:-100%;
+
+}
+
+
+100%{
+
+left:100%;
+
+}
+
+`;
+
+
+
+
+
+
+
+
+
+
+
+// ================= STYLE =================
+
+
+
+
 
 const FooterContainer = styled.footer`
-  background: #111827;
-  color: white;
-  padding: 60px 8% 25px;
+
+
+position:relative;
+
+
+overflow:hidden;
+
+
+padding:70px 8% 30px;
+
+
+
+background:
+
+
+linear-gradient(
+135deg,
+#fff7ed,
+#fed7aa,
+#fce7f3
+);
+
+
+
+background-size:300% 300%;
+
+
+
+animation:${moveBg} 10s infinite;
+
+
+
 `;
 
-const Content = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
+
+
+
+
+
+
+
+
+const Newsletter = styled.div`
+
+
+position:relative;
+
+
+z-index:2;
+
+
+padding:45px;
+
+
+
+border-radius:45px;
+
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+
+backdrop-filter:blur(25px);
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:space-between;
+
+
+
+gap:30px;
+
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.15);
+
+
+
+overflow:hidden;
+
+
+
+&:hover::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+top:0;
+
+
+left:-100%;
+
+
+width:100%;
+
+
+height:100%;
+
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+#ffffff99,
+transparent
+);
+
+
+
+animation:${shine} .8s;
+
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+flex-direction:column;
+
+
+}
+
+
+
+h1{
+
+color:#7c2d12;
+
+}
+
+
+
+p{
+
+color:#57534e;
+
+}
+
+
+
 `;
 
-const Box = styled.div`
-  flex: 1;
-  min-width: 220px;
+
+
+
+
+
+
+
+
+const NewsForm = styled.div`
+
+
+display:flex;
+
+
+gap:15px;
+
+
+
+@media(max-width:600px){
+
+
+flex-direction:column;
+
+
+}
+
+
+
+input{
+
+
+padding:16px 25px;
+
+
+border:none;
+
+
+outline:none;
+
+
+border-radius:30px;
+
+
+}
+
+
+
+button{
+
+
+border:none;
+
+
+padding:16px 30px;
+
+
+border-radius:30px;
+
+
+background:#ea580c;
+
+
+color:white;
+
+
+display:flex;
+
+
+gap:10px;
+
+
+align-items:center;
+
+
+cursor:pointer;
+
+
+
+}
+
+
 `;
 
-const Logo = styled.h2`
-  font-size: 30px;
-  margin-bottom: 20px;
 
-  background: linear-gradient(
-    90deg,
-    #8b5cf6,
-    #06b6d4
-  );
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+
+
+
+
+
+const FooterGrid = styled.div`
+
+
+margin-top:70px;
+
+
+display:grid;
+
+
+grid-template-columns:2fr 1fr 1fr 1fr;
+
+
+gap:40px;
+
+
+
+@media(max-width:850px){
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
 `;
 
-const Description = styled.p`
-  color: #cbd5e1;
-  line-height: 1.8;
+
+
+
+
+
+
+
+
+const Brand = styled.div`
+
+
+h2{
+
+
+font-size:45px;
+
+
+color:#ea580c;
+
+
+}
+
+
+
+p{
+
+
+color:#57534e;
+
+
+line-height:1.6;
+
+
+}
+
+
+
+.social{
+
+
+display:flex;
+
+
+gap:20px;
+
+
+margin-top:25px;
+
+
+
+svg{
+
+
+font-size:28px;
+
+
+color:#ea580c;
+
+
+animation:${float} 4s infinite;
+
+
+}
+
+
+
+}
+
+
 `;
 
-const Title = styled.h3`
-  color: white;
-  margin-bottom: 20px;
+
+
+
+
+
+
+
+
+const Column = styled.div`
+
+
+h3{
+
+color:#7c2d12;
+
+}
+
+
+
+a{
+
+
+display:block;
+
+
+margin:15px 0;
+
+
+color:#57534e;
+
+
+text-decoration:none;
+
+
+transition:.3s;
+
+
+cursor:pointer;
+
+
+
+&:hover{
+
+
+color:#ea580c;
+
+
+transform:translateX(8px);
+
+
+}
+
+
+}
+
+
+
 `;
 
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
 
-  li {
-    margin-bottom: 12px;
-    color: #cbd5e1;
-    cursor: pointer;
-    transition: 0.3s;
-  }
 
-  li:hover {
-    color: #06b6d4;
-  }
-`;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #cbd5e1;
 
-  &:hover {
-    color: #06b6d4;
-  }
-`;
 
-const ContactText = styled.p`
-  color: #cbd5e1;
-  margin-bottom: 12px;
-`;
+
+
 
 const Bottom = styled.div`
-  text-align: center;
-  margin-top: 40px;
-  padding-top: 20px;
 
-  border-top: 1px solid rgba(255,255,255,0.1);
 
-  color: #94a3b8;
-  font-size: 14px;
+margin-top:50px;
+
+
+padding-top:25px;
+
+
+
+border-top:
+
+1px solid #ffffff88;
+
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+
+color:#57534e;
+
+
+
+@media(max-width:700px){
+
+
+flex-direction:column;
+
+
+gap:15px;
+
+
+}
+
+
+
+svg{
+
+color:red;
+
+
+}
+
+
+`;
+
+
+
+
+
+
+
+
+
+const Floating = styled.div`
+
+
+position:absolute;
+
+
+font-size:90px;
+
+
+color:#ea580c;
+
+
+opacity:.25;
+
+
+
+animation:${float} 5s infinite;
+
+
+
+&.pen{
+
+left:5%;
+
+top:25%;
+
+}
+
+
+
+&.book{
+
+right:5%;
+
+bottom:20%;
+
+animation-delay:2s;
+
+}
+
+
+
 `;

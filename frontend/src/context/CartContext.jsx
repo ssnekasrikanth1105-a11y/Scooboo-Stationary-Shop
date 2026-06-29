@@ -1,68 +1,249 @@
-// src/context/CartContext.jsx
+import React,{createContext,useState} from "react";
+import {toast} from "react-toastify";
 
-import { createContext, useState } from "react";
 
 export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
 
-  const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product) => {
 
-  const existing = cartItems.find(
-    (item) => item.id === product.id
-  );
+export function CartProvider({children}){
 
-  if (existing) {
 
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
 
-    alert(`${product.name} quantity updated in cart ✅`);
+const [cart,setCart]=useState([]);
 
-  } else {
 
-    setCartItems([
-      ...cartItems,
-      {
-        ...product,
-        quantity: 1,
-      },
-    ]);
 
-    alert(`${product.name} added to cart 🛒`);
-  }
+
+
+
+// ADD TO CART
+
+const addToCart=(product)=>{
+
+
+
+const exist = cart.find(
+item=>item.id===product.id
+);
+
+
+
+if(exist){
+
+
+toast.info("Already added 🛒");
+
+
+return;
+
+
+}
+
+
+
+
+setCart([
+
+...cart,
+
+{
+
+...product,
+
+qty:1
+
+}
+
+]);
+
+
+
+toast.success("Added to cart ✅");
+
+
+
 };
-const removeFromCart = (id) => {
 
-  const product = cartItems.find(
-    (item) => item.id === id
-  );
 
-  setCartItems(
-    cartItems.filter(
-      (item) => item.id !== id
-    )
-  );
 
-  alert(`${product.name} removed from cart ❌`);
+
+
+
+
+
+
+
+
+// PLUS BUTTON
+
+
+const increaseQty=(id)=>{
+
+
+setCart(
+
+cart.map(item=>
+
+
+item.id===id
+
+?
+
+{
+
+...item,
+
+qty:item.qty+1
+
+}
+
+
+:
+
+item
+
+
+)
+
+);
+
+
+
 };
 
-  return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+
+
+
+
+
+
+
+
+
+
+// MINUS BUTTON
+
+
+const decreaseQty=(id)=>{
+
+
+
+setCart(
+
+cart.map(item=>{
+
+
+if(
+item.id===id &&
+item.qty>1
+){
+
+
+return{
+
+...item,
+
+qty:item.qty-1
+
 };
+
+
+}
+
+
+
+return item;
+
+
+})
+
+
+);
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// REMOVE
+
+
+const removeCart=(id)=>{
+
+
+
+setCart(
+
+cart.filter(
+item=>item.id!==id
+)
+
+);
+
+
+
+toast.error("Removed 🗑️");
+
+
+
+};
+
+
+
+
+
+
+
+
+
+return(
+
+
+
+<CartContext.Provider
+
+
+value={{
+
+cart,
+
+addToCart,
+
+increaseQty,
+
+decreaseQty,
+
+removeCart
+
+
+}}
+
+
+
+>
+
+
+{children}
+
+
+</CartContext.Provider>
+
+
+
+)
+
+
+
+}

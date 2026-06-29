@@ -1,258 +1,1004 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-const Navbar = () => {
-  const { cartItems } = useContext(CartContext);
-  return (
-    <Nav>
-      <LogoSection>
-        ✏️ <span>SCOOBOO</span>
-      </LogoSection>
+import React,{useState,useContext} from "react";
+import styled,{keyframes} from "styled-components";
+import {NavLink} from "react-router-dom";
 
-      <Menu>
-        <StyledLink to="/">
-          <MenuItem>Home</MenuItem>
-        </StyledLink>
+import {
+FaBars,
+FaTimes,
+FaShoppingCart,
+FaHeart,
+FaUser,
+FaThLarge
+} from "react-icons/fa";
 
-        <StyledLink to="/shop">
-          <MenuItem>Shop</MenuItem>
-        </StyledLink>
 
-        <StyledLink to="/collection">
-          <MenuItem>Collections</MenuItem>
-        </StyledLink>
+import {CartContext} from "../context/CartContext";
+import {WishlistContext} from "../context/WishlistContext";
 
-        <StyledLink to="/deals">
-          <MenuItem>Deals</MenuItem>
-        </StyledLink>
 
-        <StyledLink to="/wishlist">
-          <MenuItem>Wishlist</MenuItem>
-        </StyledLink>
 
-        <StyledLink to="/contact">
-          <MenuItem>Contact</MenuItem>
-        </StyledLink>
 
-        <StyledLink to="/login">
-          <MenuItem>Login</MenuItem>
-        </StyledLink>
-      </Menu>
+function Navbar(){
 
-      <RightSection>
-        <Search placeholder="Search items..." />
 
-        <AdminLogo>
-          IA
-        </AdminLogo>
+const [open,setOpen]=useState(false);
 
-        <StyledLink to="/cart">
-          <Cart>
-            🛒
-           <Badge>{cartItems.length}</Badge>
-          </Cart>
-        </StyledLink>
-      </RightSection>
-    </Nav>
-  );
+
+
+const {cart=[]}=useContext(CartContext);
+
+const {wishlist=[]}=useContext(WishlistContext);
+
+
+
+
+const closeMenu=()=>{
+
+setOpen(false);
+
 };
+
+
+
+
+
+
+
+return(
+
+
+<Container>
+
+
+
+<Nav>
+
+
+
+
+
+<Logo
+
+to="/"
+
+onClick={closeMenu}
+
+>
+
+
+<div>
+
+📓
+
+</div>
+
+
+SCOOBOO
+
+
+</Logo>
+
+
+
+
+
+
+
+
+
+<Links open={open}>
+
+
+<Item 
+to="/"
+onClick={closeMenu}
+>
+
+Home
+
+</Item>
+
+
+
+
+
+<Item 
+to="/shop"
+onClick={closeMenu}
+>
+
+Shop
+
+</Item>
+
+
+
+
+
+
+
+<Item 
+to="/collection"
+onClick={closeMenu}
+>
+
+Collection
+
+</Item>
+
+
+
+
+
+
+
+<Item 
+to="/deals"
+onClick={closeMenu}
+>
+
+Deals
+
+</Item>
+
+
+
+
+
+
+
+<Item 
+to="/contact"
+onClick={closeMenu}
+>
+
+Contact
+
+</Item>
+
+
+
+
+
+
+
+<Item 
+to="/login"
+onClick={closeMenu}
+>
+
+Login
+
+</Item>
+
+
+
+
+
+
+
+<Item 
+to="/admin"
+onClick={closeMenu}
+>
+
+
+<FaThLarge/>
+
+
+Dashboard
+
+
+</Item>
+
+
+
+
+
+
+</Links>
+
+
+
+
+
+
+
+
+
+<Actions>
+
+
+
+
+
+
+<Icon to="/wishlist">
+
+
+<FaHeart/>
+
+
+{
+
+wishlist.length>0 &&
+
+<Badge>
+
+{wishlist.length}
+
+</Badge>
+
+}
+
+
+</Icon>
+
+
+
+
+
+
+
+
+
+<Icon to="/cart">
+
+
+<FaShoppingCart/>
+
+
+{
+
+cart.length>0 &&
+
+<Badge>
+
+{cart.length}
+
+</Badge>
+
+}
+
+
+
+</Icon>
+
+
+
+
+
+
+
+
+
+<Icon to="/profile">
+
+
+<FaUser/>
+
+</Icon>
+
+
+
+
+
+
+</Actions>
+
+
+
+
+
+
+
+<Menu
+
+onClick={()=>setOpen(!open)}
+
+>
+
+
+{
+
+open ?
+
+<FaTimes/>
+
+:
+
+<FaBars/>
+
+}
+
+
+
+</Menu>
+
+
+
+
+
+
+</Nav>
+
+
+
+</Container>
+
+
+)
+
+}
+
+
 
 export default Navbar;
 
-/* ================= STYLES ================= */
 
-const Nav = styled.nav`
-  width: 100%;
-  height: 85px;
-  background: #111827;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 50px;
-  box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 
-  @media (max-width: 900px) {
-    padding: 0 20px;
-  }
+
+
+
+
+
+
+// ================= ANIMATION =================
+
+
+
+const glow=keyframes`
+
+
+0%{
+
+box-shadow:
+0 0 0 #fb923c;
+
+}
+
+
+
+50%{
+
+
+box-shadow:
+0 0 40px #fb923c77;
+
+
+}
+
+
+
+100%{
+
+
+box-shadow:
+0 0 0 #fb923c;
+
+
+}
+
+
 `;
 
-const LogoSection = styled.h1`
-  font-size: 32px;
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
 
-  span {
-    background: linear-gradient(
-      90deg,
-      #8b5cf6,
-      #06b6d4,
-      #ec4899
-    );
 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+
+
+const pulse=keyframes`
+
+
+0%{
+
+transform:scale(1);
+
+}
+
+
+50%{
+
+transform:scale(1.3);
+
+}
+
+
+100%{
+
+transform:scale(1);
+
+}
+
+
+
 `;
 
-const Menu = styled.ul`
-  display: flex;
-  gap: 28px;
-  list-style: none;
-  align-items: center;
 
-  @media (max-width: 1000px) {
-    gap: 15px;
-  }
+
+
+
+
+
+
+
+// ================= STYLE =================
+
+
+
+
+
+
+const Container=styled.div`
+
+position:sticky;
+
+top:15px;
+
+z-index:999;
+
+padding:15px 0;
+
+
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+
+
+
+
+
+
+
+
+const Nav=styled.nav`
+
+
+width:90%;
+
+
+height:78px;
+
+
+margin:auto;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:space-between;
+
+
+
+padding:0 35px;
+
+
+
+
+border-radius:40px;
+
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.75),
+
+rgba(255,247,237,.75)
+
+);
+
+
+
+
+backdrop-filter:blur(20px);
+
+
+
+border:1px solid #fed7aa;
+
+
+
+animation:${glow} 4s infinite;
+
+
+
 `;
 
-const MenuItem = styled.li`
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  position: relative;
-  transition: 0.3s;
 
-  &:hover {
-    color: #06b6d4;
-  }
 
-  &::after {
-    content: "";
-    width: 0;
-    height: 3px;
-    background: linear-gradient(
-      90deg,
-      #8b5cf6,
-      #06b6d4
-    );
 
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    border-radius: 10px;
-    transition: 0.3s;
-  }
 
-  &:hover::after {
-    width: 100%;
-  }
+
+
+
+
+
+
+const Logo=styled(NavLink)`
+
+
+text-decoration:none;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+
+gap:12px;
+
+
+
+font-size:26px;
+
+
+font-weight:700;
+
+
+
+color:#7c2d12;
+
+
+
+
+div{
+
+font-size:35px;
+
+}
+
+
+
 `;
 
-const RightSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 18px;
+
+
+
+
+
+
+
+
+const Links=styled.div`
+
+
+display:flex;
+
+
+gap:22px;
+
+
+
+
+@media(max-width:850px){
+
+
+position:absolute;
+
+
+
+top:90px;
+
+
+
+left:5%;
+
+
+
+width:90%;
+
+
+
+padding:25px;
+
+
+
+border-radius:30px;
+
+
+
+background:white;
+
+
+
+flex-direction:column;
+
+
+
+align-items:center;
+
+
+
+display:${p=>p.open?"flex":"none"};
+
+
+
+}
+
+
+
 `;
 
-const Search = styled.input`
-  padding: 12px 18px;
-  width: 180px;
 
-  border: 1px solid #374151;
-  border-radius: 30px;
-  outline: none;
 
-  background: #1f2937;
-  color: white;
 
-  transition: 0.3s;
 
-  &:focus {
-    border-color: #06b6d4;
-    width: 220px;
-  }
 
-  &::placeholder {
-    color: #9ca3af;
-  }
+
+
+
+const Item=styled(NavLink)`
+
+
+text-decoration:none;
+
+
+
+color:#57534e;
+
+
+
+font-weight:600;
+
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+gap:7px;
+
+
+
+
+position:relative;
+
+
+
+transition:.3s;
+
+
+
+
+
+&:after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+
+bottom:-8px;
+
+
+left:0;
+
+
+
+height:3px;
+
+
+
+width:0;
+
+
+
+background:#f97316;
+
+
+
+border-radius:20px;
+
+
+
+transition:.3s;
+
+
+
+}
+
+
+
+
+
+
+
+&:hover{
+
+
+color:#ea580c;
+
+
+transform:translateY(-3px);
+
+
+}
+
+
+
+
+&:hover:after,
+
+&.active:after{
+
+
+width:100%;
+
+
+}
+
+
+
+
+&.active{
+
+
+color:#ea580c;
+
+
+}
+
+
+
+
 `;
 
-const AdminLogo = styled.div`
-  width: 48px;
-  height: 48px;
 
-  border-radius: 50%;
 
-  background: linear-gradient(
-    135deg,
-    #8b5cf6,
-    #06b6d4,
-    #ec4899
-  );
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
 
-  transition: 0.3s;
 
-  &:hover {
-    transform: scale(1.08);
-  }
+
+
+
+
+
+
+const Actions=styled.div`
+
+
+display:flex;
+
+
+gap:12px;
+
+
+
+
+@media(max-width:850px){
+
+
+display:none;
+
+
+}
+
+
 `;
 
-const Cart = styled.div`
-  width: 50px;
-  height: 50px;
 
-  border-radius: 50%;
 
-  background: linear-gradient(
-    135deg,
-    #f59e0b,
-    #ef4444
-  );
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  position: relative;
 
-  font-size: 22px;
-  cursor: pointer;
 
-  transition: 0.3s;
 
-  &:hover {
-    transform: scale(1.08);
-  }
+
+
+
+
+
+const Icon=styled(NavLink)`
+
+
+
+position:relative;
+
+
+
+width:44px;
+
+
+height:44px;
+
+
+
+border-radius:50%;
+
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+justify-content:center;
+
+
+
+
+
+background:white;
+
+
+
+color:#9a3412;
+
+
+
+text-decoration:none;
+
+
+
+
+transition:.3s;
+
+
+
+
+
+&:hover{
+
+
+transform:translateY(-6px) scale(1.1);
+
+
+
+background:#ffedd5;
+
+
+}
+
+
+
 `;
 
-const Badge = styled.span`
-  position: absolute;
-  top: -5px;
-  right: -4px;
 
-  width: 20px;
-  height: 20px;
 
-  border-radius: 50%;
 
-  background: red;
-  color: white;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  font-size: 11px;
-  font-weight: bold;
+
+
+
+
+
+
+const Badge=styled.span`
+
+
+
+position:absolute;
+
+
+
+top:-5px;
+
+
+right:-5px;
+
+
+
+
+
+width:22px;
+
+
+height:22px;
+
+
+
+
+border-radius:50%;
+
+
+
+background:#ef4444;
+
+
+
+color:white;
+
+
+
+font-size:12px;
+
+
+
+font-weight:bold;
+
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+justify-content:center;
+
+
+
+
+animation:${pulse} 1.5s infinite;
+
+
+
+`;
+
+
+
+
+
+
+
+
+
+const Menu=styled.button`
+
+
+display:none;
+
+
+
+width:45px;
+
+
+height:45px;
+
+
+
+border:none;
+
+
+
+border-radius:50%;
+
+
+
+background:#ea580c;
+
+
+
+color:white;
+
+
+
+cursor:pointer;
+
+
+
+
+
+@media(max-width:850px){
+
+
+display:block;
+
+
+}
+
+
 `;
